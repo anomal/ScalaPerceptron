@@ -17,7 +17,6 @@ class LinearNeuron (var numInputs:Int, var bias:Double) {
       throw new IllegalArgumentException("length of adjustments must be " + numInputs)
     } else {
       weights = (weights, adjustments).zipped.map(_ + _)
-      println(s"weights: ", weights)
     }
   }
 }
