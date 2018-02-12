@@ -1,9 +1,9 @@
 # ScalaPerceptron
-A simple core Scala implementation of a theoretical Perceptron.
+A simple core Scala implementation of a theoretical Perceptron. There are only three classes:
 
-1. Perceptron.scala has the perceptron learning algorithm, and has a
-2. BinaryThresholdNeuron.scala, which is a neuron that outputs either 0 or 1, and is wrapper around a
-3. LinearNeuron.scala, which implements the neural activation and weight adjustments algorithms
+1. `Perceptron.scala`, which has the perceptron learning algorithm, and uses
+2. `BinaryThresholdNeuron.scala`, which is a neuron that outputs either 0 or 1, and is wrapper around
+3. `LinearNeuron.scala`, which implements the neural activation and weight adjustments algorithms.
 
 To use,
 
