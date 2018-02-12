@@ -12,16 +12,20 @@ class PerceptronTest {
     * with label 1, and other points with label 0
     */
   @Test def testLearnEquationOfLine() = {
+    val slope = -1
+    val yIntercept = 5
+
     val perceptron = new Perceptron(2, 0.0)
     val numTrainingCases = 5000
     val numTests = 50
 
     for (i <- 0 until numTrainingCases) {
+
       val x1 = randomNumberBetween0and(10)
       val y1 = randomNumberBetween0and(10)
 
-      // for a given x1, the expected y should be on or above the linen y = -x + 5
-      val y = -x1 + 5
+      // for a given x1, the expected y should be on or above the line y = -x + 5
+      val y = slope * x1 + yIntercept
 
       if (y1 >= y) {
         perceptron.train(Seq(x1,y1), 1)
@@ -35,8 +39,8 @@ class PerceptronTest {
       val x1 = randomNumberBetween0and(10)
       val y1 = randomNumberBetween0and(10)
 
-      // for a given x1, the expected y should be on or above the linen y = -x + 5
-      val y = -x1 + 5
+      // for a given x1, the expected y should be on or above the line y = -x + 5
+      val y = slope * x1 + yIntercept
       var expected = y1 match {
         case y1 if (y1 >= y) => 1
         case _ => 0
@@ -51,7 +55,12 @@ class PerceptronTest {
     }
 
     val percentCorrect = 100.0*numPass/numTests
-    println("testLearnEquationOfLine accuracy: " + percentCorrect)
+    println(s"testLearnEquationOfLine accuracy: $percentCorrect%")
+
+    print("weights: ")
+    for (weight <- perceptron.getWeights()) { print(s"$weight ") }
+    println()
+
     assertTrue(percentCorrect > 75)
   }
 
