@@ -15,7 +15,7 @@ class PerceptronTest {
     val slope = -1
     val yIntercept = 5
 
-    val perceptron = new Perceptron(2, 0.0)
+    val perceptron = new Perceptron(2)
     val numTrainingCases = 5000
     val numTests = 50
 

@@ -9,6 +9,10 @@ class Perceptron (var numInputs:Int, var threshold:Double) {
 
   private val decisionUnit = new BinaryThresholdNeuron(numInputs, threshold)
 
+  def this(numInputs:Int){
+    this(numInputs, 0)
+  }
+
   /**
     * Train the perceptron, teaching it that the given inputs should produce the expected output answer
     * @param inputs input values
