@@ -1,6 +1,10 @@
 # ScalaPerceptron
 A simple core Scala implementation of a theoretical Perceptron.
 
+1. Perceptron.scala has the perceptron learning algorithm, and has a
+2. BinaryThresholdNeuron.scala, which is a neuron that outputs either 0 or 1, and is wrapper around a
+3. LinearNeuron.scala, which implements the neural activation and weight adjustments algorithms
+
 To use,
 
     val numInputs = 3
@@ -14,3 +18,5 @@ To use,
     // test perceptron's learning
     val inputs = Seq(3.3,2.2,1.1)
     println(perceptron.classify(inputs)) // either 0 or 1
+
+
