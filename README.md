@@ -2,6 +2,7 @@
 A simple core Scala implementation of a theoretical Perceptron.
 
 To use,
+
     val numInputs = 3
     val perceptron = new Perceptron(numInputs)
     val inputsGood = Seq(1.1,2.2,3.3)
