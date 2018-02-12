@@ -1,44 +1,59 @@
 package com.github.anomal.perceptron
 
 /**
-  * Perceptron neural network
-  * @param numInputs number of inputs to the perceptron; input vector size
-  * @param threshold threshold to decide that the input vector is a positive example of the target class
+  * Perceptron neural network.
+  * The standard perceptron architecture actually consists of input units connected to hand-coded feature units,
+  * which in turn feed into the decision unit. For the purposes of the machine learning, the output of
+  * the feature units can be referred to as "input units" relative to the decision unit.
+  * @param numIncomingConnections number of incoming connections
+  * @param threshold threshold to decide if the values of the incoming connections represent a positive example of the
+  *                  target class
   */
-class Perceptron (var numInputs:Int, var threshold:Double) {
+class Perceptron (var numIncomingConnections:Int, var threshold:Double) {
 
-  private val decisionUnit = new BinaryThresholdNeuron(numInputs, threshold)
+  private val decisionUnit = new BinaryThresholdNeuron(numIncomingConnections, threshold)
 
-  def this(numInputs:Int){
-    this(numInputs, 0)
+  /**
+    * number of incoming connections
+    * @param numIncomingConnections
+    */
+  def this(numIncomingConnections:Int){
+    this(numIncomingConnections, 0)
   }
 
   /**
-    * Train the perceptron, teaching it that the given inputs should produce the expected output answer
-    * @param inputs input values
+    * Train the perceptron, teaching it that the values of the incoming connections provided should produce
+    * the expected output answer
+    * @param incomingConnectionValues values of incoming connections
     * @param answer correct answer; must be either 1 (positive example of target class) or 0 (negative example)
     */
-  def train(inputs:Seq[Double], answer:Int) = {
+  def train(incomingConnectionValues:Seq[Double], answer:Int) = {
     if (answer != 1 && answer != 0) {
       throw new IllegalArgumentException("answer must be 0 or 1")
     } else {
-      val output = classify(inputs)
+      val output = classify(incomingConnectionValues)
+      /* Perceptron convergence procedure (as per Hinton et al. in Neural Networks For Machine Learning (Coursera) lecture 2):
+      –  If the output unit is correct, leave its weights alone.
+      –  If the output unit incorrectly outputs a zero, add the input vector to the weight vector.
+      –  If the output unit incorrectly outputs a 1, subtract the input vector from the weight vector.
+       */
       if (output != answer) {
         output match {
-          case 0 => decisionUnit.adjustWeights(inputs)
-          case 1 => decisionUnit.adjustWeights(inputs.map(-1 * _))
+          case 0 => decisionUnit.adjustWeights(incomingConnectionValues)
+          case 1 => decisionUnit.adjustWeights(incomingConnectionValues.map(-1 * _))
         }
       }
     }
   }
 
   /**
-    * Classify the given inputs as a positive example of the target class (1) or not (0)
-    * @param inputs input vector
-    * @return 1 if it is a positive example of the target class; otherwise, 0
+    * Classify the values of the incoming connections as a positive example of the target class (1) or not (0)
+    * @param incomingConnectionValues values of incoming connections
+    * @return 1 if the provided values of the incoming connections is a positive example of the target class;
+    *         otherwise, returns 0
     */
-  def classify(inputs:Seq[Double]) = {
-    decisionUnit.output(inputs)
+  def classify(incomingConnectionValues:Seq[Double]) = {
+    decisionUnit.output(incomingConnectionValues)
   }
 
   /**
