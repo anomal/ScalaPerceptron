@@ -5,7 +5,7 @@ A simple core Scala implementation of a Perceptron neural network. There are onl
 2. `BinaryThresholdNeuron.scala`, which is a neuron that outputs either 0 or 1, and is a wrapper around
 3. `LinearNeuron.scala`, which implements the neural activation and weight adjustment formulas.
 
-Perceptrons can only learn to differentiate between classes that are [linearly separable](http://www.ece.utep.edu/research/webfuzzy/docs/kk-thesis/kk-thesis-html/node19.html).
+Perceptrons can only learn to differentiate between classes that are [linearly separable](http://www.ece.utep.edu/research/webfuzzy/docs/kk-thesis/kk-thesis-html/node19.html). Every class and function is documented with Scaladoc style comments.
 
 To use the library,
 
