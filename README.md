@@ -5,7 +5,7 @@ A simple core Scala implementation of a perceptron neural network. There are onl
 - `BinaryThresholdNeuron.scala`, which is a neuron that outputs either 0 or 1, and is a wrapper around
 - `LinearNeuron.scala`, which implements the neural activation and weight adjustment formulas.
 
-This generic perceptron implementation can be used for any finite number of input connections where the corresponding input values are of type `Double`. There is no hard-coded or generated input data in `src/main`, as the intent is to implement and isolate only the perceptron theoretical concepts, formulas, and algorithms using functional and object-oriented design. 
+This generic perceptron implementation can be used for any finite number of input connections where the corresponding input values are of type `Double`. There is no hard-coded or generated input data in `src/main`, as the intent is to implement and isolate only the perceptron theoretical concepts, formulas, and algorithms using functional and object-oriented design with minimal code. 
 
 Note that a perceptron can only learn to differentiate between classes that are [linearly separable](http://www.ece.utep.edu/research/webfuzzy/docs/kk-thesis/kk-thesis-html/node19.html).  
 
