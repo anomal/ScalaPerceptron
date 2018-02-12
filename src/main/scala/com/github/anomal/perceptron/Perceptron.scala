@@ -17,4 +17,7 @@ class Perceptron (var numInputs:Int, var threshold:Double) {
   def classify(inputs:Seq[Double]) = {
     decisionUnit.output(inputs)
   }
+
+  def getWeights(): Seq[Double] = decisionUnit.getWeights
+
 }

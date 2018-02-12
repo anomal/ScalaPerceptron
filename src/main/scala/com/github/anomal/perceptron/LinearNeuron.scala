@@ -19,5 +19,8 @@ class LinearNeuron (var numInputs:Int, var bias:Double) {
       weights = (weights, adjustments).zipped.map(_ + _)
     }
   }
+
+  def getWeights():Seq[Double] = for (e <- weights) yield e
+
 }
 

@@ -15,4 +15,6 @@ class BinaryThresholdNeuron (var numInputs:Int, var threshold:Double) {
   def adjustWeights(adjustments:Seq[Double]) = {
     linearNeuron.adjustWeights(adjustments)
   }
+
+  def getWeights : Seq[Double] = linearNeuron.getWeights()
 }
