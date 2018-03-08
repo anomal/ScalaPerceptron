@@ -52,7 +52,7 @@ class Perceptron (var numIncomingConnections:Int, var threshold:Double) {
     * @return 1 if the provided values of the incoming connections is a positive example of the target class;
     *         otherwise, returns 0
     */
-  def classify(incomingConnectionValues:Seq[Double]) = {
+  def classify(incomingConnectionValues:Seq[Double]) : Int = {
     decisionUnit.output(incomingConnectionValues)
   }
 
