@@ -1,5 +1,6 @@
 package com.github.anomal.perceptron
 
+import scala.util.{Try, Success, Failure}
 import org.junit.Assert._
 import org.junit.Test
 
@@ -46,12 +47,12 @@ class PerceptronTest {
         case _ => 0
       }
 
-      val actual = perceptron.classify(Seq(x1, y1))
-
-      if (actual == expected) {
-        numPass += 1
+      perceptron.classify(Seq(x1, y1)) match {
+        case Success(actual) =>
+          if (actual == expected) {
+          numPass += 1
+          }
       }
-
     }
 
     val percentCorrect = 100.0*numPass/numTests
@@ -107,10 +108,11 @@ class PerceptronTest {
         case _ => 0
       }
 
-      val actual = perceptron.classify(Seq(x1, y1))
-
-      if (actual == expected) {
-        numPass += 1
+      perceptron.classify(Seq(x1, y1)) match {
+        case Success(actual) =>
+          if (actual == expected) {
+            numPass += 1
+          }
       }
 
     }

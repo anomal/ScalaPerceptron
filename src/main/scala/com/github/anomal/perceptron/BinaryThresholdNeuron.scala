@@ -1,5 +1,7 @@
 package com.github.anomal.perceptron
 
+import scala.util.{Try, Success, Failure}
+
 /**
   * Represents a binary threshold neuron or decision unit
   * @param numInputConnections number of input connections to the neuron
@@ -16,11 +18,17 @@ class BinaryThresholdNeuron (var numInputConnections:Int, var threshold:Double) 
     *               the number of input connections
     * @return 1 if the the neuron's activation is greater than or equal to the threshold; otherwise, returns 0
     */
-  def output(inputs:Seq[Double]) : Int = {
-    if (linearNeuron.output(inputs) >= 0) {
-      1
-    } else {
-      0
+  def output(inputs:Seq[Double]) : Try[Int] = {
+    linearNeuron.output(inputs) match {
+      case Success(v) =>
+        Success(
+          if (v >= 0) {
+            1
+          } else {
+            0
+          }
+        )
+      case Failure(e) => Failure(e)
     }
   }
 

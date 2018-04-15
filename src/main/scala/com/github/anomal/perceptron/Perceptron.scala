@@ -1,5 +1,8 @@
 package com.github.anomal.perceptron
 
+import scala.util.{Try, Success, Failure}
+
+
 /**
   * Perceptron neural network.
   * The standard perceptron architecture actually consists of input units connected to hand-coded feature units,
@@ -31,18 +34,21 @@ class Perceptron (var numIncomingConnections:Int, var threshold:Double) {
     if (answer != 1 && answer != 0) {
       throw new IllegalArgumentException("answer must be 0 or 1")
     } else {
-      val output = classify(incomingConnectionValues)
-      /* Perceptron convergence procedure (as per Hinton et al. in Neural Networks For Machine Learning (Coursera) lecture 2):
-      –  If the output unit is correct, leave its weights alone.
-      –  If the output unit incorrectly outputs a zero, add the input vector to the weight vector.
-      –  If the output unit incorrectly outputs a 1, subtract the input vector from the weight vector.
-       */
-      if (output != answer) {
-        output match {
-          case 0 => decisionUnit.adjustWeights(incomingConnectionValues)
-          case 1 => decisionUnit.adjustWeights(incomingConnectionValues.map(-1 * _))
+        /* Perceptron convergence procedure (as per Hinton et al. in Neural Networks For Machine Learning (Coursera) lecture 2):
+        –  If the output unit is correct, leave its weights alone.
+        –  If the output unit incorrectly outputs a zero, add the input vector to the weight vector.
+        –  If the output unit incorrectly outputs a 1, subtract the input vector from the weight vector.
+         */
+        classify(incomingConnectionValues) match {
+          case Success(output) =>
+            if (output != answer) {
+              output match {
+                case 0 => decisionUnit.adjustWeights(incomingConnectionValues)
+                case 1 => decisionUnit.adjustWeights(incomingConnectionValues.map(-1 * _))
+              }
+            }
+          case Failure(e) => Failure(e)
         }
-      }
     }
   }
 
@@ -52,7 +58,7 @@ class Perceptron (var numIncomingConnections:Int, var threshold:Double) {
     * @return 1 if the provided values of the incoming connections is a positive example of the target class;
     *         otherwise, returns 0
     */
-  def classify(incomingConnectionValues:Seq[Double]) : Int = {
+  def classify(incomingConnectionValues:Seq[Double]) : Try[Int] = {
     decisionUnit.output(incomingConnectionValues)
   }
 

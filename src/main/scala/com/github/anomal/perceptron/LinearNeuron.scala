@@ -1,5 +1,7 @@
 package com.github.anomal.perceptron
 
+import scala.util.{Try, Success, Failure}
+
 /**
   * Represents a linear neuron
   * @param numInputConnections number of input connections to the neuron, excluding the bias input connection
@@ -16,11 +18,11 @@ class LinearNeuron (var numInputConnections:Int, var bias:Double) {
     *               the number of input connections
     * @return the neuron's activation as a real number
     */
-  def output(inputs:Seq[Double]): Double = {
+  def output(inputs:Seq[Double]): Try[Double] = {
     if (inputs.lengthCompare(numInputConnections) != 0) {
-      throw new IllegalArgumentException("length of inputs must be " + numInputConnections)
+      Failure(new IllegalArgumentException(s"length of inputs must be $numInputConnections"))
     } else {
-      (inputs, weights).zipped.map(_ * _).sum + bias
+      Success((inputs, weights).zipped.map(_ * _).sum + bias)
     }
   }
 
@@ -30,7 +32,7 @@ class LinearNeuron (var numInputConnections:Int, var bias:Double) {
     */
   def adjustWeights(adjustments:Seq[Double]) = {
     if (adjustments.lengthCompare(numInputConnections) != 0) {
-      throw new IllegalArgumentException("length of adjustments must be " + numInputConnections)
+      throw new IllegalArgumentException(s"length of adjustments must be $numInputConnections")
     } else {
       weights = (weights, adjustments).zipped.map(_ + _)
     }
