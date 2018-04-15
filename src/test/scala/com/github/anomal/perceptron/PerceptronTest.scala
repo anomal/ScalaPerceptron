@@ -16,9 +16,10 @@ class PerceptronTest {
     val slope = -1
     val yIntercept = 5
 
-    val perceptron = new Perceptron(2)
+    val perceptron = new Perceptron
     val numTrainingCases = 5000
     val numTests = 50
+    var decisionUnit = Nothing
 
     for (i <- 0 until numTrainingCases) {
 
@@ -77,7 +78,7 @@ class PerceptronTest {
     val slope = 0
     val yIntercept = 3
 
-    val perceptron = new Perceptron(2)
+    val perceptron = new Perceptron
     val numTrainingCases = 5000
     val numTests = 50
 

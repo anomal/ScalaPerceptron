@@ -7,9 +7,9 @@ import scala.util.{Try, Success, Failure}
   * @param numInputConnections number of input connections to the neuron
   * @param threshold threshold of the neuron's activation to output 1
   */
-class BinaryThresholdNeuron (var numInputConnections:Int, var threshold:Double) {
+class BinaryThresholdNeuron (val weights:Seq[Double], val threshold:Double) {
 
-  private val linearNeuron = new LinearNeuron(numInputConnections, -1 * threshold)
+  private val linearNeuron = new LinearNeuron(weights, -1 * threshold)
 
   /**
     * Outputs 1 if the sum over the (input * weight) for each element of the inputs and corresponding weights
@@ -32,17 +32,4 @@ class BinaryThresholdNeuron (var numInputConnections:Int, var threshold:Double) 
     }
   }
 
-  /**
-    * Adjust the weights of the input connections to the neuron.
-    * @param adjustments weight adjustments; the number of adjustments must equal the number of input connections
-    */
-  def adjustWeights(adjustments:Seq[Double]) = {
-    linearNeuron.adjustWeights(adjustments)
-  }
-
-  /**
-    * View the weights of the input connections
-    * @return weights of the input connections
-    */
-  def getWeights : Seq[Double] = linearNeuron.getWeights()
 }
