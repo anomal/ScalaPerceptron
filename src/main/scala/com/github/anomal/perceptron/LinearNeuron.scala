@@ -18,7 +18,7 @@ class LinearNeuron (val weights:Seq[Double], var bias:Double) {
     */
   def output(inputs:Seq[Double]): Try[Double] = {
     if (inputs.lengthCompare(weights.length) != 0) {
-      Failure(new IllegalArgumentException(s"length of inputs must be $numInputConnections"))
+      Failure(new IllegalArgumentException(s"length of inputs must be ${weights.length}"))
     } else {
       Success((inputs, weights).zipped.map(_ * _).sum + bias)
     }

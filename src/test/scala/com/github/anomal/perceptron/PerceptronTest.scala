@@ -12,14 +12,15 @@ class PerceptronTest {
     * Test that perceptron can classify points on or to the top-right of the line y = -x + 5
     * with label 1, and other points with label 0
     */
-  @Test def testLearnEquationOfLineNegativeSlope() = {
+  @Test def testLearnEquationOfLineNegativeSlope = {
     val slope = -1
     val yIntercept = 5
 
     val perceptron = new Perceptron
     val numTrainingCases = 5000
     val numTests = 50
-    var decisionUnit = Nothing
+    val weights:Seq[Double] = Seq.fill(2)(1.0)
+    var decisionUnit = new BinaryThresholdNeuron(weights, 0)
 
     for (i <- 0 until numTrainingCases) {
 
@@ -30,9 +31,15 @@ class PerceptronTest {
       val y = slope * x1 + yIntercept
 
       if (y1 >= y) {
-        perceptron.train(Seq(x1,y1), 1)
+        decisionUnit = perceptron.train(decisionUnit, Seq(x1,y1), 1) match {
+          case Success(u) => u
+          case Failure(e) => throw e
+        }
       } else {
-        perceptron.train(Seq(x1,y1), 0)
+        decisionUnit = perceptron.train(decisionUnit, Seq(x1,y1), 0) match {
+          case Success(u) => u
+          case Failure(e) => throw e
+        }
       }
     }
 
@@ -48,7 +55,7 @@ class PerceptronTest {
         case _ => 0
       }
 
-      perceptron.classify(Seq(x1, y1)) match {
+      decisionUnit.output(Seq(x1, y1)) match {
         case Success(actual) =>
           if (actual == expected) {
           numPass += 1
@@ -60,7 +67,7 @@ class PerceptronTest {
     println(s"testLearnEquationOfLineNegativeSlope accuracy: $percentCorrect%")
 
     print("weights: ")
-    for (weight <- perceptron.getWeights()) { print(s"$weight ") }
+    for (weight <- decisionUnit.weights) { print(s"$weight ") }
     println()
 
     assertTrue(percentCorrect > 70)
@@ -74,13 +81,15 @@ class PerceptronTest {
     * Test that perceptron can classify points above the line y = 3
     * with label 1, and other points with label 0
     */
-  @Test def testLearnEquationOfLineZeroSlope() = {
+  @Test def testLearnEquationOfLineZeroSlope = {
     val slope = 0
     val yIntercept = 3
 
     val perceptron = new Perceptron
     val numTrainingCases = 5000
     val numTests = 50
+    val weights:Seq[Double] = Seq.fill(2)(1.0)
+    var decisionUnit = new BinaryThresholdNeuron(weights, 0)
 
     for (i <- 0 until numTrainingCases) {
 
@@ -91,9 +100,15 @@ class PerceptronTest {
       val y = slope * x1 + yIntercept
 
       if (y1 >= y) {
-        perceptron.train(Seq(x1,y1), 1)
+        decisionUnit = perceptron.train(decisionUnit, Seq(x1,y1), 1) match {
+          case Success(u) => u
+          case Failure(e) => throw e
+        }
       } else {
-        perceptron.train(Seq(x1,y1), 0)
+        decisionUnit = perceptron.train(decisionUnit, Seq(x1,y1), 0) match {
+          case Success(u) => u
+          case Failure(e) => throw e
+        }
       }
     }
 
@@ -109,7 +124,7 @@ class PerceptronTest {
         case _ => 0
       }
 
-      perceptron.classify(Seq(x1, y1)) match {
+      decisionUnit.output(Seq(x1, y1)) match {
         case Success(actual) =>
           if (actual == expected) {
             numPass += 1
@@ -122,7 +137,7 @@ class PerceptronTest {
     println(s"testLearnEquationOfLineZeroSlope accuracy: $percentCorrect%")
 
     print("weights: ")
-    for (weight <- perceptron.getWeights()) { print(s"$weight ") }
+    for (weight <- decisionUnit.weights) { print(s"$weight ") }
     println()
 
     assertTrue(percentCorrect > 70)

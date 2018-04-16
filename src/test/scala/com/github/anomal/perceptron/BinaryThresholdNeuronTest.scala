@@ -6,19 +6,27 @@ import org.junit.Test
 
 class BinaryThresholdNeuronTest {
 
-  @Test def testThreshold() = {
+  @Test def testThreshold0 = {
+
     val inputs = Seq(1.0, 2.0, -4.0)
-    val neuron = new BinaryThresholdNeuron(inputs.length, 0.0)
+    val weights:Seq[Double] = Seq.fill(inputs.length)(1.0)
+    val neuron = new BinaryThresholdNeuron(weights, 0.0)
     neuron.output(inputs) match {
       case Success(v) => assertEquals(0, v)
       case Failure(e) => throw e
     }
-    val neuron2 = new BinaryThresholdNeuron(inputs.length, -1.0)
-    neuron2.output(inputs) match {
+
+
+  }
+
+  @Test def testThresholdNeg1 = {
+    val inputs = Seq(1.0, 2.0, -4.0)
+    val weights:Seq[Double] = Seq.fill(inputs.length)(1.0)
+    val neuron = new BinaryThresholdNeuron(weights, -1.0)
+    neuron.output(inputs) match {
       case Success(v) => assertEquals(1, v)
       case Failure(e) => throw e
     }
-
   }
 
 }

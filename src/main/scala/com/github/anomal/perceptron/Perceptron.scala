@@ -55,7 +55,7 @@ class Perceptron {
     */
   def adjustWeights(weights:Seq[Double], adjustments:Seq[Double]): Try[Seq[Double]] = {
     if (adjustments.lengthCompare(weights.length) != 0) {
-      Failure(new IllegalArgumentException(s"length of adjustments must be $numInputConnections"))
+      Failure(new IllegalArgumentException("length of adjustments must be equal to length of weights"))
     } else {
       Success((weights, adjustments).zipped.map(_ + _))
     }
