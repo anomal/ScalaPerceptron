@@ -143,4 +143,17 @@ class PerceptronTest {
     assertTrue(percentCorrect > 70)
   }
 
+  @Test
+  def testException = {
+    val weights: Seq[Double] = Seq.fill(2)(1.0)
+    val decisionUnit = new BinaryThresholdNeuron(weights, 0)
+    val perceptron = new Perceptron
+    perceptron.train(decisionUnit, Seq(0, 1, 1), 1) match {
+      case Success(neuron) => fail()
+      case Failure(ex) => ex match {
+        case e : IllegalArgumentException => println(s"ok : ${e}")
+        case f => fail(f.toString)
+      }
+    }
+  }
 }
