@@ -8,6 +8,30 @@ class PerceptronTest {
 
   private val rand = scala.util.Random
 
+  @Test def testReadme = {
+    var decisionUnit = new BinaryThresholdNeuron(Seq.fill(3)(1.0), 0)
+    val perceptron = new Perceptron
+
+    val inputsGood = Seq(1.1,2.2,3.3)
+    perceptron.train(decisionUnit, inputsGood, 1) match {
+      case Success(u) => decisionUnit = u
+    }
+    val inputsBad = Seq(-1.1,-2.2,-3.3)
+    perceptron.train(decisionUnit, inputsBad, 0) match {
+      case Success(u) => decisionUnit = u
+    }
+    // more training ...
+
+    // test perceptron's learning
+    val inputs = Seq(3.3,2.2,1.1)
+    decisionUnit.output(inputs) match {
+      case Success(v) => {
+        println(s"$inputs is classified as $v") // either 0 or 1
+        assertTrue(v == 1 || v == 0)
+      }
+    }
+  }
+
   /**
     * Test that perceptron can classify points on or to the top-right of the line y = -x + 5
     * with label 1, and other points with label 0
